@@ -1,0 +1,18 @@
+#
+# Stephen Romano 2019
+#
+
+#Hint: This scan filters for volume breakouts.
+#wizard text: Volume Breakout
+#wizard text: Inputs: Breakout Ration:
+#wizard input: breakoutRatio
+#wizard text: Volume Avg length:
+#wizard input: length
+
+
+input breakoutRatio = 1.618;
+input length = 50;
+
+def VolAvg = Average(volume, length);
+
+plot scan = volume >= VolAvg * breakoutRatio;

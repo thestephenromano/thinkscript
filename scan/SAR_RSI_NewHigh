@@ -1,0 +1,28 @@
+#
+# Stephen Romano 2019
+#
+
+
+#Hint: This scan filters for new RSI high.
+#Wizard text: The RSI with a length of
+#Wizard input: length
+#Wizard text:   and a  
+#Wizard input: averageType
+#Wizard text:   average type, is 
+#Wizard input:  choice
+#Wizard input: value
+
+input length = 14;
+input value = 70;
+input price = close;
+input choice = { default "Greater Than", "Less Than","Equal to"};
+input averageType = AverageType.WILDERS;
+
+def NetChgAvg = MovingAverage(averageType, price - price[1], length);
+def TotChgAvg = MovingAverage(averageType, AbsValue(price - price[1]), length);
+def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0;
+def RSI = 50 * (ChgRatio + 1);
+
+def highestAll = HighestAll(RSI);
+
+plot scan = RSI[0]==highestAll or RSI[1]==highestAll;

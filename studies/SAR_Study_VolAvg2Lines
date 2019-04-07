@@ -1,0 +1,29 @@
+#
+# Stephen Romano 2019
+#
+
+#wizard text: Volume Avg 2 Lines
+#wizard text: Inputs: Slow Length:
+#wizard input: slowLength
+#wizard text: Fast Length:
+#wizard input: fastLength
+
+declare on_volume;
+declare zerobase;
+
+input slowLength = 50;
+input fastLength = 13;
+
+
+plot Vol = volume;
+
+plot SlowVolAvg = Average(volume, slowLength);
+plot FastVolAvg = ExpAverage(volume, fastLength);
+
+
+Vol.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+Vol.SetDefaultColor(CreateColor(0,102,153));
+Vol.SetLineWeight(1);
+
+SlowVolAvg.SetDefaultColor(CreateColor(204,204,204));
+FastVolAvg.SetDefaultColor(CreateColor(255,0,0));
